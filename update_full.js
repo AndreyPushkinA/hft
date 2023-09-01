@@ -1,4 +1,3 @@
-// Ваш JavaScript-код
 const btcPriceElement = document.getElementById('btcPrice');
 const tradeListElement = document.getElementById('tradeList');
 const orderBookElement = document.getElementById('orderBook');
@@ -17,11 +16,14 @@ function fetchPrice() {
 }
 
 function fetchTrades() {
+    const tradeListElement = document.getElementById('tradeList');
+
     fetch('https://api.huobi.pro/market/history/trade?symbol=btcusdt')
         .then(response => response.json())
         .then(data => {
             tradeListElement.innerHTML = ''; // Clear previous data
-            const trades = data.data;
+
+            const trades = data.data && data.data.length > 0 ? data.data[0].data : null;
 
             if (!trades || trades.length === 0) {
                 console.error('No trade data found.');
@@ -29,19 +31,23 @@ function fetchTrades() {
                 return;
             }
 
-            trades.forEach(trade => {
+            // Limit the number of trades to 3
+            for(let i = 0; i < Math.min(3, trades.length); i++) {
+                const trade = trades[i];
                 const tradeItem = document.createElement('li');
                 const formattedPrice = parseFloat(trade.price).toFixed(2);
                 const formattedAmount = parseFloat(trade.amount).toFixed(6);
                 tradeItem.textContent = `Price: $${formattedPrice}, Amount: ${formattedAmount}`;
                 tradeListElement.appendChild(tradeItem);
-            });
+            }
         })
         .catch(error => {
             console.error('Error fetching trades:', error);
             tradeListElement.innerHTML = 'Failed to fetch trades';
         });
 }
+
+
 
 const askListElement = document.getElementById('askList');
 const bidListElement = document.getElementById('bidList');
@@ -83,6 +89,6 @@ fetchTrades();
 fetchOrderBook();
 
 // Установка интервалов для обновления данных
-setInterval(fetchPrice, 1000); // Обновление цены каждые 10 секунд
-setInterval(fetchTrades, 1500); // Обновление сделок каждые 15 секунд
-setInterval(fetchOrderBook, 2000); // Обновление ордеров каждые 20 секунд
+setInterval(fetchPrice, 1000);
+setInterval(fetchTrades, 1500);
+setInterval(fetchOrderBook, 2000);

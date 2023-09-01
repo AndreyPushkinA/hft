@@ -1,15 +1,26 @@
 .order-book {
-	display: table;
-	width: 100%;
-	border-collapse: collapse;
-  }
-.order-row {
-    display: table-row;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* ensure columns don't wrap onto the next line */
+    align-items: start; /* align columns at the top */
 }
+
 .order-column {
-    display: table-cell;	
-	width: 50%;
-	vertical-align: top;
-	padding: 0;
-	background: #fff2e1;
-  }
+    flex: 0 0 49%; /* this ensures that each column takes up 49% of the parent width and doesn't grow or shrink */
+    margin: 0 0.5%; /* a slight margin for separation */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+}
+#tradeContainer {
+    position: fixed; /* makes it stick to a position regardless of scrolling */
+    top: 10px;       /* distance from the top */
+    right: 10px;     /* distance from the right */
+    width: 250px;    /* adjust as needed */
+    max-height: 150px;  /* adjust as needed */
+    overflow-y: auto;  /* adds a scrollbar if the content exceeds the max-height */
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    background-color: #ffffff; /* adjust as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
