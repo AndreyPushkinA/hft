@@ -1,0 +1,15 @@
+.order-book {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+  }
+.order-row {
+    display: table-row;
+}
+.order-column {
+    display: table-cell;	
+	width: 50%;
+	vertical-align: top;
+	padding: 0;
+	background: #fff2e1;
+  }
